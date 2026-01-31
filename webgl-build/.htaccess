@@ -1,0 +1,25 @@
+<IfModule mod_mime.c>
+    # MIME types for WebGL
+    AddType application/wasm .wasm
+    AddType application/javascript .js
+    AddType application/octet-stream .data
+    
+    # Handle pre-compressed files
+    AddEncoding gzip .gz
+    
+    # Serve compressed JS as JavaScript
+    AddType application/javascript .js.gz
+    
+    # Serve compressed WASM as WebAssembly
+    AddType application/wasm .wasm.gz
+    
+    # Serve compressed data files
+    AddType application/octet-stream .data.gz
+</IfModule>
+
+<IfModule mod_headers.c>
+    # Force correct encoding headers for .gz files
+    <FilesMatch "\.gz$">
+        Header set Content-Encoding gzip
+    </FilesMatch>
+</IfModule>
